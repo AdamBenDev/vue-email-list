@@ -12,4 +12,24 @@ const app = Vue.createApp({
             emailNumbers: 10
         }
     }, 
+
+    methods: {
+        getRandomEmail(){
+            for(let i = 0; i < this.emailNumbers; i++){
+                axios.get(this.apiEmail)
+                .then((response) => {
+                    const email = response.data.response;
+                    this.emails.push(email)
+                }).catch(error => {
+                this.errorMessage = error.message;
+                })
+            }
+        }
+    },
+
+    mounted (){
+        this.getRandomEmail();
+    }
 });
+
+app.mount('#root');
